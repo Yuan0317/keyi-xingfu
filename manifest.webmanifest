@@ -1,0 +1,9 @@
+{
+  "name": "可以幸福",
+  "short_name": "可以幸福",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fbf8f0",
+  "theme_color": "#4d7358",
+  "lang": "zh-CN"
+}

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>可以幸福</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section id="authScreen" class="screen auth-screen">
+        <div class="brand-mark" aria-hidden="true">可</div>
+        <p class="eyebrow">私密感恩手账</p>
+        <h1>可以幸福</h1>
+        <p class="intro">每天写下三件小事，把生活里轻轻发亮的部分留住。</p>
+
+        <form id="authForm" class="panel">
+          <label>
+            邮箱
+            <input id="emailInput" type="email" autocomplete="email" placeholder="you@example.com" required />
+          </label>
+          <label>
+            密码
+            <input id="passwordInput" type="password" autocomplete="current-password" placeholder="至少 6 位" required />
+          </label>
+          <button class="primary-button" type="submit">进入我的手账</button>
+          <p class="form-note">原型阶段会在本机模拟注册和登录；正式版会接入云端账号。</p>
+        </form>
+      </section>
+
+      <section id="appScreen" class="screen app-screen hidden">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">可以幸福</p>
+            <h2 id="greeting">今天也收集一点点好</h2>
+          </div>
+          <button id="logoutButton" class="icon-button" type="button" aria-label="退出登录">↗</button>
+        </header>
+
+        <section class="memory-card">
+          <div>
+            <p class="eyebrow">打开时的小回顾</p>
+            <p id="randomMemory" class="memory-text">还没有旧记录。写下今天的三件小事，明天的你会收到一份温柔。</p>
+          </div>
+          <button id="shuffleButton" class="small-button" type="button">换一条</button>
+        </section>
+
+        <nav class="tabs" aria-label="主要页面">
+          <button class="tab active" data-view="todayView" type="button">今天</button>
+          <button class="tab" data-view="historyView" type="button">历史</button>
+          <button class="tab" data-view="settingsView" type="button">设置</button>
+        </nav>
+
+        <section id="todayView" class="view active">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">今日记录</p>
+              <h3>三件值得感谢的小事</h3>
+            </div>
+            <input id="dateInput" class="date-input" type="date" />
+          </div>
+
+          <div id="gratitudeList" class="gratitude-list"></div>
+          <button id="addItemButton" class="secondary-button" type="button">再加一件</button>
+
+          <div id="completionCard" class="completion-card">
+            <span id="completionIcon">○</span>
+            <p id="completionText">写满 3 件后，今天就被好好收起来了。</p>
+          </div>
+        </section>
+
+        <section id="historyView" class="view">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">历史</p>
+              <h3>以前收集到的幸福</h3>
+            </div>
+          </div>
+          <div id="historyList" class="history-list"></div>
+        </section>
+
+        <section id="settingsView" class="view">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">设置</p>
+              <h3>提醒时间</h3>
+            </div>
+          </div>
+          <div class="panel settings-panel">
+            <label>
+              我通常几点睡觉
+              <input id="bedtimeInput" type="time" />
+            </label>
+            <div class="setting-row">
+              <span>睡前提醒记录今天</span>
+              <input id="bedReminderInput" type="checkbox" checked />
+            </div>
+            <div class="setting-row">
+              <span>早上 10 点随机回顾</span>
+              <input id="morningReminderInput" type="checkbox" checked />
+            </div>
+            <button id="saveSettingsButton" class="primary-button" type="button">保存设置</button>
+            <p id="settingsMessage" class="form-note"></p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <template id="gratitudeItemTemplate">
+      <article class="gratitude-item">
+        <div class="item-top">
+          <span class="item-number"></span>
+          <button class="remove-button" type="button" aria-label="删除这一条">×</button>
+        </div>
+        <textarea rows="3" placeholder="今天让我感恩的是..."></textarea>
+        <label class="photo-picker">
+          <input type="file" accept="image/*" />
+          <span>添加图片</span>
+        </label>
+        <img class="photo-preview hidden" alt="感恩小事的图片预览" />
+      </article>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
