@@ -6,6 +6,8 @@
     <title>可以幸福</title>
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="./config.js"></script>
   </head>
   <body>
     <main class="app-shell">
@@ -24,8 +26,9 @@
             密码
             <input id="passwordInput" type="password" autocomplete="current-password" placeholder="至少 6 位" required />
           </label>
-          <button class="primary-button" type="submit">进入我的手账</button>
-          <p class="form-note">原型阶段会在本机模拟注册和登录；正式版会接入云端账号。</p>
+          <button class="primary-button" type="submit">登录</button>
+          <button id="signupButton" class="secondary-button inline-secondary" type="button">第一次使用，注册账号</button>
+          <p id="authMessage" class="form-note">注册后，你的记录会私密保存到云端。</p>
         </form>
       </section>
 
@@ -35,7 +38,7 @@
             <p class="eyebrow">可以幸福</p>
             <h2 id="greeting">今天也收集一点点好</h2>
           </div>
-          <button id="logoutButton" class="icon-button" type="button" aria-label="退出登录">↗</button>
+          <button id="logoutButton" class="icon-button" type="button" aria-label="退出登录">退出</button>
         </header>
 
         <section class="memory-card">
@@ -63,6 +66,7 @@
 
           <div id="gratitudeList" class="gratitude-list"></div>
           <button id="addItemButton" class="secondary-button" type="button">再加一件</button>
+          <button id="saveEntriesButton" class="primary-button save-button" type="button">保存到云端</button>
 
           <div id="completionCard" class="completion-card">
             <span id="completionIcon">○</span>
