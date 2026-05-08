@@ -67,6 +67,23 @@ function setMessage(element, text) {
   element.textContent = text;
 }
 
+function friendlyAuthError(error) {
+  const message = error?.message || "";
+  if (message.includes("Email address not authorized")) {
+    return "这个邮箱暂时不能收到 Supabase 的验证邮件。请先在 Supabase 关闭邮箱确认，或配置自定义 SMTP 邮件服务。";
+  }
+  if (message.includes("Signup is disabled")) {
+    return "当前 Supabase 项目关闭了新用户注册，请在 Auth 设置里打开 Allow new users to sign up。";
+  }
+  if (message.includes("rate limit") || message.includes("For security purposes")) {
+    return "验证邮件发送太频繁了，请稍等一会儿再试，或配置自定义 SMTP 邮件服务。";
+  }
+  if (message.includes("Invalid login credentials")) {
+    return "登录失败，请确认邮箱、密码，或先完成邮箱验证。";
+  }
+  return message || "操作失败，请稍后再试。";
+}
+
 function greetingForDate(date) {
   return date === todayKey() ? "今天也收集一点点好" : "给这一天补上一点光";
 }
@@ -395,7 +412,7 @@ authForm.addEventListener("submit", async (event) => {
   });
 
   if (error) {
-    setMessage(authMessage, "登录失败，请确认邮箱和密码。");
+    setMessage(authMessage, friendlyAuthError(error));
     return;
   }
 
@@ -413,10 +430,13 @@ signupButton.addEventListener("click", async () => {
   const { data, error } = await supabaseClient.auth.signUp({
     email: emailInput.value.trim(),
     password: passwordInput.value,
+    options: {
+      emailRedirectTo: window.location.origin + window.location.pathname,
+    },
   });
 
   if (error) {
-    setMessage(authMessage, "注册失败，请换一个邮箱或稍后再试。");
+    setMessage(authMessage, friendlyAuthError(error));
     return;
   }
 
